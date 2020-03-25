@@ -9,7 +9,9 @@ function defaults(object, source) {
   }
   return object;
 }
-
+exports.init = function (options, successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "VolumeControl", "initCommand", [options]);
+},
 exports.toggleMute = function( success, error) {
   exec(success, error, 'VolumeControl', 'toggleMute', []);
 };
@@ -23,12 +25,13 @@ exports.getVolume = function(success, error) {
 };
 
 exports.setVolume = function(volume, success, error) {
-  if(volume > 1) {
+  if (volume > 1) {
     volume /= 100;
   }
   exec(success, error, 'VolumeControl', 'setVolume', [volume * 1]);
 };
 
+/*
 exports.getCategory = function(success, error) {
   exec(success, error, 'VolumeControl', 'getCategory', []);
 };
@@ -36,3 +39,4 @@ exports.getCategory = function(success, error) {
 exports.hideVolume = function(success, error) {
   exec(success, error, 'VolumeControl', 'hideVolume', []);
 };
+*/
