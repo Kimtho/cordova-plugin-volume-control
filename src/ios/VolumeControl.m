@@ -19,6 +19,8 @@
 - (void)isMuted:(CDVInvokedUrlCommand*)command;
 - (void)setVolume:(CDVInvokedUrlCommand*)command;
 - (void)getVolume:(CDVInvokedUrlCommand*)command;
+- (void)showVolumeNotifications:(CDVInvokedUrlCommand *)command;
+- (void)hideVolumeNotifications:(CDVInvokedUrlCommand *)command;
 /*
 - (void)getCategory:(CDVInvokedUrlCommand*)command;
 - (void)hideVolume:(CDVInvokedUrlCommand*)command;
@@ -45,10 +47,11 @@
     }
     
     
+    
 }
 
 
-- (void)showVolumeNotifications
+- (void)showVolumeNotifications: (CDVInvokedUrlCommand*)command
 {
     if(self.volumeView){
         [self.volumeView removeFromSuperview];
@@ -56,7 +59,7 @@
     }
     
 }
-- (void)hideVolumeNotifications
+- (void)hideVolumeNotifications: (CDVInvokedUrlCommand*)command
 {
     if ( ! self.volumeView){
         CGRect frame = CGRectMake(0, 0, 10, 0);
