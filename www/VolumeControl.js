@@ -23,7 +23,12 @@ exports.isMuted = function(success, error) {
 exports.getVolume = function(success, error) {
   exec(success, error, 'VolumeControl', 'getVolume', []);
 };
-
+exports.showVolumeNotifications = function(success, error) {
+  exec(success, error, 'VolumeControl', 'showVolumeNotifications', []);
+};
+exports.hideVolumeNotifications = function(success, error) {
+  exec(success, error, 'VolumeControl', 'hideVolumeNotifications', []);
+};
 exports.setVolume = function(volume, success, error) {
   if (volume > 1) {
     volume /= 100;

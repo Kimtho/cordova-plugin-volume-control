@@ -39,15 +39,6 @@
         hideVolumeNotification = [options objectForKey:@"hideVolumeNotification"];
     }
     
-    
-   
-    
-    if(hideVolumeNotification != nil && [hideVolumeNotification boolValue]){
-        [self hideVolumeNotifications];
-    }
-    
-    
-    
 }
 
 
