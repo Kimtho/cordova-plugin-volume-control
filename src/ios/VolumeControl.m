@@ -48,6 +48,7 @@
         [self.volumeView removeFromSuperview];
         self.volumeView = nil;
     }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 - (void)hideVolumeNotifications: (CDVInvokedUrlCommand*)command
@@ -58,6 +59,7 @@
         [self.volumeView sizeToFit];
         [[[[UIApplication sharedApplication] windows] firstObject] insertSubview:self.volumeView atIndex:0];
     }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)toggleMute:(CDVInvokedUrlCommand*)command
