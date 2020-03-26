@@ -44,21 +44,27 @@
 
 - (void)showVolumeNotifications: (CDVInvokedUrlCommand*)command
 {
+    CDVPluginResult* pluginResult = nil;
     if(self.volumeView){
         [self.volumeView removeFromSuperview];
         self.volumeView = nil;
     }
+    BOOL result;
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 - (void)hideVolumeNotifications: (CDVInvokedUrlCommand*)command
 {
+     CDVPluginResult* pluginResult = nil;
     if ( ! self.volumeView){
         CGRect frame = CGRectMake(0, 0, 10, 0);
         self.volumeView = [[MPVolumeView alloc] initWithFrame:frame];
         [self.volumeView sizeToFit];
         [[[[UIApplication sharedApplication] windows] firstObject] insertSubview:self.volumeView atIndex:0];
     }
+    BOOL result;
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
