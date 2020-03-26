@@ -15,8 +15,6 @@
 }
 @property(nonatomic, retain) UIView *volumeView;
 - (void)initCommand:(CDVInvokedUrlCommand *)command;
-- (void)toggleMute:(CDVInvokedUrlCommand*)command;
-- (void)isMuted:(CDVInvokedUrlCommand*)command;
 - (void)setVolume:(CDVInvokedUrlCommand*)command;
 - (void)getVolume:(CDVInvokedUrlCommand*)command;
 - (void)showVolumeNotifications:(CDVInvokedUrlCommand *)command;
@@ -68,47 +66,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)toggleMute:(CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult = nil;
-    DLog(@"toggleMute");
 
-    Class avSystemControllerClass = NSClassFromString(@"AVSystemController");
-    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(sharedAVSystemController)];
-
-    NSInvocation *privateInvocation = [NSInvocation invocationWithMethodSignature:
-                                      [avSystemControllerClass instanceMethodSignatureForSelector:
-                                       @selector(toggleActiveCategoryMuted)]];
-    [privateInvocation setTarget:avSystemControllerInstance];
-    [privateInvocation setSelector:@selector(toggleActiveCategoryMuted)];
-    [privateInvocation invoke];
-    BOOL result;
-    [privateInvocation getReturnValue:&result];
-
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-- (void)isMuted:(CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult = nil;
-    DLog(@"isMuted");
-
-    Class avSystemControllerClass = NSClassFromString(@"AVSystemController");
-    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(sharedAVSystemController)];
-
-    BOOL result;
-    NSInvocation *privateInvocation = [NSInvocation invocationWithMethodSignature:
-                                      [avSystemControllerClass instanceMethodSignatureForSelector:
-                                       @selector(getActiveCategoryMuted:)]];
-    [privateInvocation setTarget:avSystemControllerInstance];
-    [privateInvocation setSelector:@selector(getActiveCategoryMuted:)];
-    [privateInvocation setArgument:&result atIndex:2];
-    [privateInvocation invoke];
-
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
 
 - (void)setVolume:(CDVInvokedUrlCommand*)command
 {
@@ -117,18 +75,11 @@
 
     DLog(@"setVolume: [%f]", volume);
 
-    Class avSystemControllerClass = NSClassFromString(@"AVSystemController");
-    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(sharedAVSystemController)];
-
-    NSInvocation *privateInvocation = [NSInvocation invocationWithMethodSignature:
-                                     [avSystemControllerClass instanceMethodSignatureForSelector:
-                                      @selector(setActiveCategoryVolumeTo:)]];
-    [privateInvocation setTarget:avSystemControllerInstance];
-    [privateInvocation setSelector:@selector(setActiveCategoryVolumeTo:)];
-    [privateInvocation setArgument:&volume atIndex:2];
-    [privateInvocation invoke];
+    
+    [[MPMusicPlayerController applicationMusicPlayer] setVolume:volume];
+   
     BOOL result;
-    [privateInvocation getReturnValue:&result];
+  
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
