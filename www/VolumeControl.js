@@ -12,6 +12,13 @@ function defaults(object, source) {
 exports.init = function (options, successCallback, errorCallback) {
   cordova.exec(successCallback, errorCallback, "VolumeControl", "initCommand", [options]);
 },
+exports.toggleMute = function( success, error) {
+  exec(success, error, 'VolumeControl', 'toggleMute', []);
+};
+
+exports.isMuted = function(success, error) {
+  exec(success, error, 'VolumeControl', 'isMuted', []);
+};
 
 exports.getVolume = function(success, error) {
   exec(success, error, 'VolumeControl', 'getVolume', []);
